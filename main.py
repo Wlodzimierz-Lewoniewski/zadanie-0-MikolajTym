@@ -25,7 +25,9 @@ for keyword in keywords:
     df = pd.DataFrame(data={"document": docs})
     df["clean_doc"] = df["document"].apply(lambda doc: re.sub(r'[^\w\s]', '', doc).lower().split(" "))
     df["count"] = df["clean_doc"].apply(lambda doc: Counter(doc).get(keyword, 0))
-    df = df.sort_values(by=["count", "document"], ascending=[False, True])
+    # If counted words numbers are equal, sort by document alphabetically
+    # df = df.sort_values(by=["count", "document"], ascending=[False, True])
+    df = df.sort_values(by=["count"], ascending=[False])
     df = df[df["count"]>0]
     results = list(df.index)
     print(results)
