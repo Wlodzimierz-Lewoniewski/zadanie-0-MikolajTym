@@ -28,7 +28,7 @@ for keyword in keywords:
     # If counted words numbers are equal, sort by document alphabetically
     # df = df.sort_values(by=["count", "document"], ascending=[False, True])
     df["index"] = df.index
-    df.sort_values(by=["count", "index"], ascending=[False, True])
+    df = df.sort_values(by=["count", "index"], ascending=[False, True])
     df = df[df["count"]>0]
     results = list(df.index)
     print(results)
