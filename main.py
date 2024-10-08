@@ -13,7 +13,7 @@ def get_data():
     keyword_num = input("Type the keyword number that should be find in documents:\n")
     keyword_num = int(keyword_num.strip())
     keywords = []
-    for i in range(keywords_num):
+    for i in range(keyword_num):
         keyword = input(f"Type the {i+1} keyword:\n").strip()
         keywords.append(keyword)
     return docs, keywords
