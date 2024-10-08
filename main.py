@@ -1,9 +1,31 @@
-#Przykład otrzymania wartości wprowadzonej przy użyciu funkcji input().
-wyraz=input()
+import re
+from collections import Counter
 
-#W celu poprawnego działania kodu w ramach GitHub Classroom warto dodatkowo użyć funkcję strip()
-#To pozwoli na usunięcie spacji oraz innych "spacjopodobnych" znaków (tabulacja \t', przejście do nowej linii '\n' lub '\r' etc.) z "głowy" i "ogona" (lewej i prawej części wyrazu).
-wyraz=wyraz.strip()
+import pandas as pd
 
-#Wydruk na ekranie (w konsoli)
-print ('Ten wyraz został wprowadzony:', wyraz)
+def get_data():
+    doc_num = input("Type the doc number:\n")
+    doc_num = int(doc_num.strip())
+    docs = []
+    for i in range(doc_num):
+        doc = input(f"Type the {i+1} document:\n").strip()
+        docs.append(doc)
+    keyword_num = input("Type the keyword number that should be find in documents:\n")
+    keyword_num = int(keyword_num.strip())
+    keywords = []
+    for i in range(keywords_num):
+        keyword = input(f"Type the {i+1} keyword:\n").strip()
+        keywords.append(keyword)
+    return docs, keywords
+
+docs, keywords = get_data()
+
+for keyword in keywords:
+    keyword = keyword.lower()
+    df = pd.DataFrame(data={"document": docs})
+    df["clean_doc"] = df["document"].apply(lambda doc: re.sub(r'[^\w\s]', '', doc).lower().split(" "))
+    df["count"] = df["clean_doc"].apply(lambda doc: Counter(doc).get(keyword, 0))
+    df = df.sort_values(by=["count", "document"], ascending=[False, True])
+    df = df[df["count"]>0]
+    results = list(df.index)
+    print(results)
